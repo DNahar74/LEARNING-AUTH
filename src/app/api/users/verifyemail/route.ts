@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
     const {token} = reqBody;
     if (!token) {
-      return NextResponse.json({ error: "No token provided", status: 401 });
+      return NextResponse.json({ error: "No token provided"}, { status: 401});
     }
 
     console.log(token);
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json({ error: "Invalid or expired token", status: 400 });
+      return NextResponse.json({ error: "Invalid or expired token"}, { status: 400});
     }
 
     console.log(user);
@@ -40,10 +40,9 @@ export async function POST(req: NextRequest) {
     
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return NextResponse.json({ 
-      error: error.message, 
-      status: 500
-    });
-    
+    return NextResponse.json(
+      { error: error.message}, 
+      { status: 500}
+    );
   }
 }

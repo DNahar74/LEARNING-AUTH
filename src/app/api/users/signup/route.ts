@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     const user = await Users.findOne({email});
     if (user) {
-      return NextResponse.json({ error: "User already exists", status: 400});
+      return NextResponse.json({ error: "User already exists"}, { status: 400});
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -40,13 +40,13 @@ export async function POST(req: NextRequest) {
       message: "User registered successfully",
       success: true,
       savedUser
-    })
+    }, { status: 200});
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return NextResponse.json({ 
-      error: error.message, 
-      status: 500
-    });
+    return NextResponse.json(
+      { error: error.message}, 
+      { status: 500}
+    );
   }
 }

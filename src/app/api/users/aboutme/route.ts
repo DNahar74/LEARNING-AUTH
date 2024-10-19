@@ -10,14 +10,14 @@ export async function GET(req: NextRequest) {
   try {
     const userId = await getDataFromToken(req);
     if (!userId) {
-      return NextResponse.json({ error: "Invalid token", status: 401 });
+      return NextResponse.json({ error: "Invalid token"}, { status: 401});
     }
 
     const user = await Users.findById(userId).select("-password");
     //? select helps choose what fields to return and not - means it wont be returned
     
     if (!user) {
-      return NextResponse.json({ error: "User does not exist", status: 400});
+      return NextResponse.json({ error: "User does not exist"}, { status: 400});
     }
 
     return NextResponse.json({
@@ -28,10 +28,10 @@ export async function GET(req: NextRequest) {
     
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return NextResponse.json({ 
-      error: error.message, 
-      status: 500
-    });
+    return NextResponse.json(
+      { error: error.message},
+      { status: 500}
+    );
     
   }
 }

@@ -16,14 +16,14 @@ export async function POST(req: NextRequest) {
 
     const user = await Users.findOne({email});
     if (!user) {
-      return NextResponse.json({ error: "User does not exist", status: 400});
+      return NextResponse.json({ error: "User does not exist"}, { status: 400});
     }
 
     console.log(user);
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return NextResponse.json({ error: "Please check your credentials", status: 400});
+      return NextResponse.json({ error: "Please check your credentials"}, { status: 400});
     }
 
     const tokenData = {
@@ -47,10 +47,9 @@ export async function POST(req: NextRequest) {
     
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return NextResponse.json({ 
-      error: error.message, 
-      status: 500
-    });
-    
+    return NextResponse.json(
+      { error: error.message}, 
+      { status: 500}
+    );
   }
 }
